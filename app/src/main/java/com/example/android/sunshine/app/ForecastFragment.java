@@ -16,6 +16,7 @@
 package com.example.android.sunshine.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -53,7 +54,7 @@ import static java.security.AccessController.getContext;
 /**
  * Encapsulates fetching the forecast and displaying it as a {@link ListView} layout.
  */
-public class ForecastFragment extends Fragment {
+    public class ForecastFragment extends Fragment {
 
     private ArrayAdapter<String> mForecastAdapter;
 
@@ -101,7 +102,7 @@ public class ForecastFragment extends Fragment {
                 "Sat 6/28 - TRAPPED IN WEATHERSTATION - 23/18",
                 "Sun 6/29 - Sunny - 20/7"
         };
-        List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
+        final List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
 
         // Now that we have some dummy forecast data, create an ArrayAdapter.
         // The ArrayAdapter will take data from a source (like our dummy forecast) and
@@ -122,10 +123,11 @@ public class ForecastFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 CharSequence text = mForecastAdapter.getItem(position);
-                int duration = Toast.LENGTH_SHORT;
 
-                Toast toast = Toast.makeText(getActivity(), text, duration);
-                toast.show();
+                Intent openDetailActivity = new Intent(getActivity(), DetailActivity.class)
+                        .putExtra(Intent.EXTRA_TEXT, text);
+                startActivity(openDetailActivity);
+
             }
         });
 
